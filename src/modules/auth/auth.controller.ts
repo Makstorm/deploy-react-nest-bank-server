@@ -21,7 +21,7 @@ import {
   ValidationPipe,
 } from '@nestjs/common';
 import { ApiBody, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { LocalAuthenticationGuard } from '../../core';
+import { JwtGuard, LocalAuthenticationGuard } from '../../core';
 
 @ApiTags('Auth')
 @Controller('auth')
@@ -43,6 +43,21 @@ export class AuthController {
     const { user } = req;
 
     return await this.service.singIn({
+      id: user.id,
+      username: user.username,
+      email: user.email,
+    });
+  }
+
+  @ApiResponse({
+    type: UserAuth,
+  })
+  @UseGuards(JwtGuard)
+  @Post('check')
+  public async checkIsAuth(@Req() req: RequestWithUser): Promise<UserAuth> {
+    const { user } = req;
+
+    return await this.service.checkIsAuth({
       id: user.id,
       username: user.username,
       email: user.email,

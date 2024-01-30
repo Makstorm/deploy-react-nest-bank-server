@@ -38,6 +38,14 @@ export class AuthService implements IAuthService {
     return new UserAuth(token);
   }
 
+  public async checkIsAuth(dto: UserTokenCreateDto): Promise<UserAuth> {
+    const token = await this.tokenService.generateJwt({
+      ...dto,
+    });
+
+    return new UserAuth(token);
+  }
+
   public async getAuthenticatedUser(dto: LoginDto): Promise<UserDocument> {
     const user = await this.userService.findByEmail(dto.email);
 

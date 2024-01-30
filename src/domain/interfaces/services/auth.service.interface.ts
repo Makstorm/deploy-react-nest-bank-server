@@ -8,6 +8,7 @@ import {
 
 export interface IAuthService {
   singIn(dto: UserTokenCreateDto): Promise<UserAuth>;
+  checkIsAuth(dto: UserTokenCreateDto): Promise<UserAuth>;
   signUp(dto: RegisterDto): Promise<UserDocument>;
   getAuthenticatedUser(dto: LoginDto): Promise<UserDocument>;
 }
