@@ -8,6 +8,8 @@ import {
   Inject,
   Req,
   UseGuards,
+  ValidationPipe,
+  UsePipes,
 } from '@nestjs/common';
 import {
   ITransactionService,
@@ -28,6 +30,7 @@ export class TransactionController {
   @ApiResponse({ type: TransactionModel })
   @Post()
   @UseGuards(JwtGuard)
+  @UsePipes(new ValidationPipe())
   public async create(
     @Body() createTransactionDto: CreateTransactionDto,
     @Req() req: RequestWithUser,
@@ -39,6 +42,7 @@ export class TransactionController {
   @ApiResponse({ type: TransactionModel })
   @Post('replenishment')
   @UseGuards(JwtGuard)
+  @UsePipes(new ValidationPipe())
   public async accountRemplenishment(
     @Body() accountRemplenishmentDto: AccountRemplenishmentDto,
     @Req() req: RequestWithUser,
@@ -53,6 +57,7 @@ export class TransactionController {
   @ApiResponse({ type: [TransactionModel] })
   @Get()
   @UseGuards(JwtGuard)
+  @UsePipes(new ValidationPipe())
   public async findAll(@Req() req: RequestWithUser) {
     const entities = await this.service.findAll(req.user.id);
 
@@ -64,6 +69,7 @@ export class TransactionController {
   @ApiResponse({ type: TransactionModel })
   @Get(':id')
   @UseGuards(JwtGuard)
+  @UsePipes(new ValidationPipe())
   public async findOne(@Param('id') id: string) {
     const entity = await this.service.findOne(id);
     return TransactionModel.formEntity(entity);
@@ -72,6 +78,7 @@ export class TransactionController {
   @ApiResponse({ type: TransactionModel })
   @Delete(':id')
   @UseGuards(JwtGuard)
+  @UsePipes(new ValidationPipe())
   public async remove(@Param('id') id: string) {
     const entity = await this.service.remove(id);
     return TransactionModel.formEntity(entity);
