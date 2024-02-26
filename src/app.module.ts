@@ -5,6 +5,7 @@ import { EmailModule } from './modules/email/email.module';
 import { TransactionModule } from './modules/transaction/transaction.module';
 import { EventEmitterModule } from '@nestjs/event-emitter';
 import { MongooseModule } from '@nestjs/mongoose';
+import { AppController } from './app.controller';
 
 @Module({
   imports: [
@@ -20,7 +21,7 @@ import { MongooseModule } from '@nestjs/mongoose';
     EmailModule,
     TransactionModule,
   ],
-  controllers: [],
+  controllers: [AppController],
   providers: [],
 })
 export class AppModule {}
